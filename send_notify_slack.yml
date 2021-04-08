@@ -1,15 +1,17 @@
 ---
 - name: Send notification to slack
+  hosts: localhost
 
-- hosts: localhost
-  gather_facts: no
-  connection: local
 
-  tasks:
+  vars:
+    slack_token: ''
+    slack_channel: "#devops"
 
-  - name: Notify devops channel
-    slack:
-      token: T01TJH0GRKL/B01TX815T33/pgAifravizqzlMMwxfJdeqYp
-      msg: "test"
-      channel: "#devops"
-    delegate_to: localhost
+  post_tasks:
+    - name: send notification to slack
+      slack:
+        token: "{{slack_token}}"
+        username: "ansible"
+        channel: "{{slack_channel}}"
+        color: "normal"
+        msg: "testsend a notification with ansible !"
